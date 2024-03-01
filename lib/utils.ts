@@ -100,14 +100,7 @@ export function removeKeysFromQuery({
   );
 }
 
-export function handleError(error: Error): NextResponse {
-  // Log error details to a server-side log
-  console.error(error.message);
-  console.error(error.stack);
-
-  // Redirect to a custom error page with status code 500
-  return NextResponse.json({
-    error: error.message,
-    statusCode: 500,
-  });
-}
+export const handleError = (error: unknown) => {
+  console.error(error);
+  throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+};
